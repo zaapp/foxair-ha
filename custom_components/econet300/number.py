@@ -82,8 +82,8 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
 
 
 def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
-    desc.native_min_value = desc.max_value
-    desc.native_max_value = desc.min_value
+    desc.native_min_value = desc.min_value
+    desc.native_max_value = desc.max_value
 
 async def async_setup_entry(
         hass: HomeAssistant,
