@@ -29,13 +29,10 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         name="Circuit1ComfortTemp",
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=TEMP_CELSIUS
+        native_unit_of_measurement=TEMP_CELSIUS,
+        native_max_value = 10,
+        native_min_value = 35
     ),
-    EconetNumberEntityDescription(
-        key="HP_work_state_set",
-        name="Heat pump work state",
-        icon="mdi:heat-pump"
-    )
 )
 
 
@@ -53,6 +50,7 @@ class EconetNumber(EconetEntity, NumberEntity):
         """Sync state"""
 
         self._attr_native_value = value
+
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: float) -> None:
@@ -86,7 +84,6 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
 def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
     desc.native_min_value = limits.min
     desc.native_max_value = limits.max
-
 
 async def async_setup_entry(
         hass: HomeAssistant,
