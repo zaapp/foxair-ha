@@ -28,9 +28,9 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         key="238",
         name="Obieg 1 temp dzień",
         icon="mdi:thermometer",
-        device_class=NumberDeviceClass.TEMPERATURE,
+        #device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        mode=NumberMode.BOX,
+        #mode=NumberMode.BOX,
         native_step=0.5
     ),
     EconetNumberEntityDescription(
