@@ -147,7 +147,7 @@ class Econet300Api:
         data = await self.fetch_data()
         config = await self.fetch_configuration()
         all_data = data
-        all_data.append(config)
+        all_data.update(config)
         return all_data
         
     async def fetch_data(self):
