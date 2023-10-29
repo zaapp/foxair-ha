@@ -51,6 +51,9 @@ class EconetNumber(EconetEntity, NumberEntity):
 
         self._attr_native_value = value
 
+        self._attr_native_min_value = 10
+        self._attr_native_max_value = 35
+
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: float) -> None:
@@ -60,14 +63,14 @@ class EconetNumber(EconetEntity, NumberEntity):
         if value == self._attr_native_value:
             return
 
-        if value > self._attr_native_max_value:
-            _LOGGER.warning(
-                "Requested value: '{}' exceeds maximum allowed value: '{}'".format(value, self._attr_max_value))
-            return
+        #if value > self._attr_native_max_value:
+        #    _LOGGER.warning(
+        #        "Requested value: '{}' exceeds maximum allowed value: '{}'".format(value, self._attr_max_value))
+        #    return
 
-        if value < self._attr_native_min_value:
-            _LOGGER.warning("Requested value: '{}' is below allowed value: '{}'".format(value, self._attr_min_value))
-            return
+        #if value < self._attr_native_min_value:
+        #    _LOGGER.warning("Requested value: '{}' is below allowed value: '{}'".format(value, self._attr_min_value))
+        #    return
 
         if not await self._api.set_param(self.entity_description.key, int(value)):
             _LOGGER.warning("Setting value failed")
@@ -82,8 +85,8 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
 
 
 def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
-    desc.native_min_value = desc.min_value
-    desc.native_max_value = desc.max_value
+    desc.native_min_value = limits.min
+    desc.native_max_value = limits.max
 
 async def async_setup_entry(
         hass: HomeAssistant,
