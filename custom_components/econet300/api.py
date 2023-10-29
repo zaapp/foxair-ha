@@ -7,8 +7,7 @@ from aiohttp import ClientSession, BasicAuth
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import API_SYS_PARAMS_PARAM_UID, API_SYS_PARAMS_URI, API_REG_PARAMS_URI, API_REG_PARAMS_PARAM_DATA, \
-    API_SYS_PARAMS_PARAM_SW_REV, API_EDIT_PARAMS_URI, API_EDIT_PARAMS_DATA
+from .const import API_SYS_PARAMS_PARAM_UID, API_SYS_PARAMS_URI, API_REG_PARAMS_URI, API_REG_PARAMS_PARAM_DATA, API_SYS_PARAMS_PARAM_SW_REV, API_EDIT_PARAMS_URI, API_EDIT_PARAMS_DATA
 from .mem_cache import MemCache
 
 _LOGGER = logging.getLogger(__name__)
