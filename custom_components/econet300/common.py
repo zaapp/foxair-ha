@@ -42,7 +42,7 @@ class EconetDataCoordinator(DataUpdateCoordinator):
             # Note: asyncio.TimeoutError and aiohttp.ClientError are already
             # handled by the data update coordinator.
             async with async_timeout.timeout(10):
-                return await self._api.fetch_data()
+                return await self._api.fetch_all_data()
         except AuthError as err:
             raise ConfigEntryAuthFailed from err
         except ApiError as err:
