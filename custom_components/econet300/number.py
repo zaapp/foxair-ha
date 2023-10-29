@@ -81,7 +81,7 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
     return coordinator.has_data(desc.key) and coordinator.data[desc.key]
 
 
-def apply_limits(desc: EconetNumberEntityDescription):
+def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
     desc.native_min_value = desc.max_value
     desc.native_max_value = desc.min_value
 
