@@ -27,40 +27,12 @@ class EconetBinarySensorEntityDescription(BinarySensorEntityDescription):
 
 BINARY_SENSOR_TYPES: tuple[EconetBinarySensorEntityDescription, ...] = (
     EconetBinarySensorEntityDescription(
-        availability_key="pumpCWU",
-        key="pumpCWUWorks",
-        name="Water pump",
+        availability_key="PHNXreg2011",
+        key="PHNXreg2011",
+        name="Pompa ciepła",
         icon="mdi:pump",
         device_class=BinarySensorDeviceClass.RUNNING
     ),
-    EconetBinarySensorEntityDescription(
-        availability_key="pumpCirculation",
-        key="pumpCirculationWorks",
-        name="Circulation pump",
-        icon="mdi:pump",
-        device_class=BinarySensorDeviceClass.RUNNING
-    ),
-    EconetBinarySensorEntityDescription(
-        availability_key="pumpFireplace",
-        key="pumpFireplaceWorks",
-        name="Fireplace pump",
-        icon="mdi:pump",
-        device_class=BinarySensorDeviceClass.RUNNING
-    ),
-    EconetBinarySensorEntityDescription(
-        availability_key="pumpSolar",
-        key="pumpSolarWorks",
-        name="Solar pump",
-        icon="mdi:pump",
-        device_class=BinarySensorDeviceClass.RUNNING
-    ),
-    EconetBinarySensorEntityDescription(
-        availability_key="lighter",
-        key="lighterWorks",
-        name="Lighter",
-        icon="mdi:fire",
-        device_class=BinarySensorDeviceClass.RUNNING
-    )
 )
 
 

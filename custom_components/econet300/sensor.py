@@ -27,8 +27,8 @@ class EconetSensorEntityDescription(SensorEntityDescription):
 
 SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     EconetSensorEntityDescription(
-        key="tempFeeder",
-        name="Feeder temp",
+        key="TempBuforUp",
+        name="Buffer temp UP",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -36,17 +36,8 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         process_val=lambda x: round(x, 2)
     ),
     EconetSensorEntityDescription(
-        key="fanPower",
-        name="Fan power",
-        icon="mdi:fan",
-        native_unit_of_measurement=PERCENTAGE,
-        state_class=SensorStateClass.MEASUREMENT,
-        device_class=SensorDeviceClass.SPEED,
-        process_val=lambda x: round(x, 2)
-    ),
-    EconetSensorEntityDescription(
-        key="tempFlueGas",
-        name="Exhaust temperature",
+        key="TempBuforDown",
+        name="Buffer temp DOWN",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -54,34 +45,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         process_val=lambda x: round(x, 2)
     ),
     EconetSensorEntityDescription(
-        key="tempCO",
-        name="Fireplace temperature",
-        icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-        device_class=SensorDeviceClass.TEMPERATURE,
-        process_val=lambda x: round(x, 2)
-    ),
-    EconetSensorEntityDescription(
-        key="tempBack",
-        name="Water back temperature ",
-        icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-        device_class=SensorDeviceClass.TEMPERATURE,
-        process_val=lambda x: round(x, 2)
-    ),
-    EconetSensorEntityDescription(
-        key="tempCWU",
-        name="Water temperature",
-        icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
-        state_class=SensorStateClass.MEASUREMENT,
-        device_class=SensorDeviceClass.TEMPERATURE,
-        process_val=lambda x: round(x, 2)
-    ),
-    EconetSensorEntityDescription(
-        key="tempExternalSensor",
+        key="TempWthr",
         name="Outside temperature",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
@@ -90,28 +54,23 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         process_val=lambda x: round(x, 2)
     ),
     EconetSensorEntityDescription(
-        key="boilerPower",
-        name="Boiler output",
-        icon="mdi:gauge",
-        native_unit_of_measurement=PERCENTAGE,
+        key="PHNXoutletTemp",
+        name="Heat pump outlet temp",
+        icon="mdi:thermometer",
+        native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
     ),
     EconetSensorEntityDescription(
-        key="fuelLevel",
-        name="Fuel level",
-        icon="mdi:gas-station",
-        native_unit_of_measurement=PERCENTAGE,
+        key="PHNXinletTemp",
+        name="Heat pump inlet temp",
+        icon="mdi:thermometer",
+        native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
-        process_val=lambda x: round(x, 1)
+        device_class=SensorDeviceClass.TEMPERATURE,
+        process_val=lambda x: round(x, 2)
     ),
-    EconetSensorEntityDescription(
-        key="mode",
-        name="Operation mode",
-        icon="mdi:sync",
-        state_class=SensorStateClass.MEASUREMENT,
-        process_val=lambda x: x
-    )
 )
 
 
