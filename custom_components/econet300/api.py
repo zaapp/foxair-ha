@@ -58,7 +58,7 @@ class EconetClient:
         return self._host
 
     async def set_param(self, key: str, value: str):
-        url = "{}/econet/newParam?newParamKey={}&newParamValue={}".format(
+        url = "{}/econet/newParam?newParamName={}&newParamValue={}".format(
             self._host, key, value
         )
 
