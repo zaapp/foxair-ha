@@ -174,7 +174,7 @@ class Econet300Api:
             return None
         
         val = current_value[param_idx]
-        return val
+        return val["value"]
 
 
     async def get_param_limits(self, param: str):
