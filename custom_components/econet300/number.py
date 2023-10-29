@@ -30,7 +30,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        native_step=0.1
+        native_step=0.5
     ),
     EconetNumberEntityDescription(
         key="239",
@@ -38,7 +38,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        native_step=0.1
+        native_step=0.5
     ),
     EconetNumberEntityDescription(
         key="261",
@@ -63,9 +63,7 @@ class EconetNumber(EconetEntity, NumberEntity):
 
     def _sync_state(self, value: float):
         """Sync state"""
-
-        self._attr_native_value = value
-        
+        self._attr_native_value = self.entity_description(value)
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: str) -> None:
