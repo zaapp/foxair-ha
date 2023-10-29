@@ -38,7 +38,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
     ),
-        EconetNumberEntityDescription(
+    EconetNumberEntityDescription(
         key="261",
         name="Obieg 1 temp wody obiegowej",
         icon="mdi:thermometer",
