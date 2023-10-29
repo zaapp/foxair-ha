@@ -30,8 +30,8 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        native_max_value = 10,
-        native_min_value = 35
+        native_max_value = 35,
+        native_min_value = 10
     ),
 )
 
