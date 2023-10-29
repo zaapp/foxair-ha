@@ -25,7 +25,14 @@ class EconetNumberEntityDescription(NumberEntityDescription):
 
 NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
     EconetNumberEntityDescription(
-        key="1231",
+        key="238",
+        name="Circuit1ComfortTemp",
+        icon="mdi:thermometer",
+        device_class=NumberDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=TEMP_CELSIUS
+    ),
+    EconetNumberEntityDescription(
+        key="HP_work_state_set",
         name="Heat pump work state",
         icon="mdi:heat-pump"
     )

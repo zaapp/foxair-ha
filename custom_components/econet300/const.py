@@ -27,5 +27,5 @@ API_CONFIG_PARAMS_URI = "editParams"
 API_CONFIG_PARAMS_DATA = "data"
 
 EDITABLE_PARAMS_MAPPING_TABLE = {
-    "HP_work_state_set": "1231"
+    "238": "238"
 }
