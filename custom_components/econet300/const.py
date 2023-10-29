@@ -21,3 +21,7 @@ API_SYS_PARAMS_PARAM_SW_REV = "softVer"
 ## Reg params
 API_REG_PARAMS_URI = "regParams"
 API_REG_PARAMS_PARAM_DATA = "curr"
+
+## Modify params
+API_CONFIG_PARAMS_URI = "editParams"
+API_CONFIG_PARAMS_DATA = "data"

@@ -7,7 +7,8 @@ from aiohttp import ClientSession, BasicAuth
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import API_SYS_PARAMS_PARAM_UID, API_SYS_PARAMS_URI, API_REG_PARAMS_URI, API_REG_PARAMS_PARAM_DATA, API_SYS_PARAMS_PARAM_SW_REV, API_EDIT_PARAMS_URI, API_EDIT_PARAMS_DATA
+from .const import API_SYS_PARAMS_PARAM_UID, API_SYS_PARAMS_URI, API_REG_PARAMS_URI, API_REG_PARAMS_PARAM_DATA, API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA, \
+    API_SYS_PARAMS_PARAM_SW_REV
 from .mem_cache import MemCache
 
 _LOGGER = logging.getLogger(__name__)
@@ -147,11 +148,11 @@ class Econet300Api:
         return await self._fetch_reg_key(API_REG_PARAMS_URI, API_REG_PARAMS_PARAM_DATA)
     
     async def fetch_configuration(self):
-        return await self._fetch_reg_key(API_EDIT_PARAMS_URI, API_EDIT_PARAMS_DATA)
+        return await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)
 
     async def get_param_limits(self, param: str):
         if not self._cache.exists(API_EDITABLE_PARAMS_LIMITS_DATA):
-            limits = await self._fetch_reg_key(API_EDIT_PARAMS_URI, API_EDIT_PARAMS_DATA)
+            limits = await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)
             self._cache.set(API_EDITABLE_PARAMS_LIMITS_DATA, limits)
 
         limits = self._cache.get(API_EDITABLE_PARAMS_LIMITS_DATA)
