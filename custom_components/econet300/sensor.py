@@ -71,6 +71,14 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
     ),
+    EconetSensorEntityDescription(
+        key="Circuit1thermostat",
+        name="Temp on thermostat 1",
+        native_unit_of_measurement=TEMP_CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        process_val=lambda x: round(x, 2)
+    )
 )
 
 
