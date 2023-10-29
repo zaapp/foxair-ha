@@ -30,6 +30,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
+        process_val=lambda x: round(x, 1)
     ),
     EconetNumberEntityDescription(
         key="239",
@@ -37,6 +38,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
+        process_val=lambda x: round(x, 1)
     ),
     EconetNumberEntityDescription(
         key="261",
@@ -44,6 +46,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
+        process_val=lambda x: round(x)
     )
 )
 
@@ -61,8 +64,7 @@ class EconetNumber(EconetEntity, NumberEntity):
     def _sync_state(self, value):
         """Sync state"""
 
-        #self._attr_native_value = value
-
+        self._attr_native_value = value
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: float) -> None:
@@ -81,7 +83,7 @@ class EconetNumber(EconetEntity, NumberEntity):
         #    _LOGGER.warning("Requested value: '{}' is below allowed value: '{}'".format(value, self._attr_min_value))
         #    return
 
-        if not await self._api.set_param(self.entity_description.key, float(value)):
+        if not await self._api.set_param(self.entity_description.key, str(value)):
             _LOGGER.warning("Setting value failed")
             return
 
