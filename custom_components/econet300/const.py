@@ -25,3 +25,7 @@ API_REG_PARAMS_PARAM_DATA = "curr"
 ## Modify params
 API_CONFIG_PARAMS_URI = "editParams"
 API_CONFIG_PARAMS_DATA = "data"
+
+EDITABLE_PARAMS_MAPPING_TABLE = {
+    "1231": "1231"
+}

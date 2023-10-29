@@ -13,6 +13,12 @@ from .mem_cache import MemCache
 
 _LOGGER = logging.getLogger(__name__)
 
+def map_param(param_name):
+    
+    if not param_name in EDITABLE_PARAMS_MAPPING_TABLE:
+        return None
+    
+    return EDITABLE_PARAMS_MAPPING_TABLE[param_name]
 
 class Limits:
     def __init__(self, min_v: float, max_v: float):
@@ -141,7 +147,7 @@ class Econet300Api:
         data = await self.fetch_data()
         config = await self.fetch_configuration()
         all_data = data
-        all_data.update(config)
+        all_data.append(config)
         return all_data
         
     async def fetch_data(self):
