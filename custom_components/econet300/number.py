@@ -47,8 +47,8 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
         native_step=1
-    )
-        EconetNumberEntityDescription(
+    ),
+    EconetNumberEntityDescription(
         key="183",
         name="Temperatura zadana bufora",
         icon="mdi:thermometer",
