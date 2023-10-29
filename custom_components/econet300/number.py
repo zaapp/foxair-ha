@@ -63,7 +63,9 @@ class EconetNumber(EconetEntity, NumberEntity):
 
     def _sync_state(self, value):
         """Sync state"""
-        self._attr_native_value = float(value)
+        self._attr_native_value = value
+        self._attr_native_min_value = value - 1
+        self._attr_native_max_value = value + 1
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: str) -> None:
