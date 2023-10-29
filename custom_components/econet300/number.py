@@ -28,9 +28,8 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         key="238",
         name="Obieg 1 temp dzień",
         icon="mdi:thermometer",
-        #device_class=NumberDeviceClass.TEMPERATURE,
+        device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        #mode=NumberMode.BOX,
         native_step=0.5
     ),
     EconetNumberEntityDescription(
@@ -67,6 +66,9 @@ class EconetNumber(EconetEntity, NumberEntity):
         self._attr_native_value = value
         self.async_write_ha_state()
 
+    async def async_update(self):
+        self._attr_value = self._api.get__param_value(self.entity_description.key)
+
     async def async_set_native_value(self, value: str) -> None:
         """Update the current value."""
         _LOGGER.debug("Set value: {}".format(value))
@@ -89,7 +91,6 @@ class EconetNumber(EconetEntity, NumberEntity):
 
         self._attr_native_value = value
         self.async_write_ha_state()
-
 
 def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordinator):
     return coordinator.has_data(desc.key) and coordinator.data[desc.key]
