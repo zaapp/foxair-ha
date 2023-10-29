@@ -156,7 +156,7 @@ class Econet300Api:
     async def fetch_configuration(self):
         return await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)
 
-    async def get__param_value(self, param: str):
+    async def get_param_value(self, param: str):
         if not self._cache.exists(API_CONFIG_PARAMS_DATA):
             current_value = await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)
             self._cache.set(API_CONFIG_PARAMS_DATA, current_value)
