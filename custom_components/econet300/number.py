@@ -26,11 +26,25 @@ class EconetNumberEntityDescription(NumberEntityDescription):
 NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
     EconetNumberEntityDescription(
         key="238",
-        name="Circuit1ComfortTemp",
+        name="Obieg 1 temp dzień",
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
     ),
+    EconetNumberEntityDescription(
+        key="239",
+        name="Obieg 1 temp noc",
+        icon="mdi:thermometer",
+        device_class=NumberDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=TEMP_CELSIUS,
+    )
+        EconetNumberEntityDescription(
+        key="261",
+        name="Obieg 1 temp wody obiegowej",
+        icon="mdi:thermometer",
+        device_class=NumberDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=TEMP_CELSIUS,
+    )
 )
 
 
@@ -48,10 +62,7 @@ class EconetNumber(EconetEntity, NumberEntity):
         """Sync state"""
 
         self._attr_native_value = value
-
-        self._attr_native_min_value = 10
-        self._attr_native_max_value = 35
-
+        
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: float) -> None:
