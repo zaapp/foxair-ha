@@ -30,8 +30,8 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        native_max_value = 35,
-        native_min_value = 10
+        max_value = 35,
+        min_value = 10
     ),
 )
 
@@ -81,9 +81,9 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
     return coordinator.has_data(desc.key) and coordinator.data[desc.key]
 
 
-def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
-    desc.native_min_value = limits.min
-    desc.native_max_value = limits.max
+def apply_limits(desc: EconetNumberEntityDescription):
+    desc.native_min_value = desc.max_value
+    desc.native_max_value = desc.min_value
 
 async def async_setup_entry(
         hass: HomeAssistant,
