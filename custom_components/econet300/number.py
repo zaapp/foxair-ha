@@ -97,9 +97,10 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
     return coordinator.has_data(desc.key) and coordinator.data[desc.key]
 
 
-def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
+def apply_limits(desc: EconetNumberEntityDescription, limits: Limits, currVal):
     desc.native_min_value = limits.min
     desc.native_max_value = limits.max
+    desc.native_value = currVal
 
 async def async_setup_entry(
         hass: HomeAssistant,
@@ -115,14 +116,19 @@ async def async_setup_entry(
 
     for description in NUMBER_TYPES:
         number_limits = await api.get_param_limits(description.key)
+        number_curr_value = await api.get_param_value(description.key)
 
         if number_limits is None:
             _LOGGER.warning("Cannot add entity: {}, numeric limits for this entity is None")
             continue
 
+        if number_curr_value is None:
+            _LOGGER.warning("Cannot add enrity: {}, numeric value because entry is None")
+            continue
+
         if can_add(description, coordinator):
 
-            apply_limits(description, number_limits)
+            apply_limits(description, number_limits, number_curr_value)
             entities.append(EconetNumber(
                 description,
                 coordinator,
