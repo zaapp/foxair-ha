@@ -22,7 +22,6 @@ _LOGGER = logging.getLogger(__name__)
 class EconetNumberEntityDescription(NumberEntityDescription):
     """Describes Econet binary sensor entity."""
 
-
 NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
     EconetNumberEntityDescription(
         key="238",
@@ -30,7 +29,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        native_step=0.5
+        native_step=1
     ),
     EconetNumberEntityDescription(
         key="239",
@@ -38,7 +37,7 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        native_step=0.5
+        native_step=1
     ),
     EconetNumberEntityDescription(
         key="261",
@@ -57,7 +56,6 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         native_step=1
     )
 )
-
 
 class EconetNumber(EconetEntity, NumberEntity):
     """Describes Econet binary sensor entity."""
@@ -90,7 +88,7 @@ class EconetNumber(EconetEntity, NumberEntity):
         #    _LOGGER.warning("Requested value: '{}' is below allowed value: '{}'".format(value, self._attr_min_value))
         #    return
 
-        if not await self._api.set_param(self.entity_description.key, str(value)):
+        if not await self._api.set_param(self.entity_description.key, int(value)):
             _LOGGER.warning("Setting value failed")
             return
 
