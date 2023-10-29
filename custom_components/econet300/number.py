@@ -66,8 +66,9 @@ class EconetNumber(EconetEntity, NumberEntity):
         self._attr_native_value = value
         self.async_write_ha_state()
 
-    async def async_update(self):
+    async def async_update(self) -> None:
         self._attr_value = self._api.get__param_value(self.entity_description.key)
+        self.async_write_ha_state()
 
     async def async_set_native_value(self, value: str) -> None:
         """Update the current value."""
