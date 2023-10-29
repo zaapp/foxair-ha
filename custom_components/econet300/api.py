@@ -156,6 +156,27 @@ class Econet300Api:
     async def fetch_configuration(self):
         return await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)
 
+    async def get__param_value(self, param: str):
+        if not self._cache.exists(API_CONFIG_PARAMS_DATA):
+            current_value = await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)
+            self._cache.set(API_CONFIG_PARAMS_DATA, current_value)
+        
+        current_value = self._cache.get(API_CONFIG_PARAMS_DATA)
+        param_idx = map_param(param)
+
+        if param_idx is None:
+            _LOGGER.warning("Requested param limits for: '{}' but mapping for this param does not exist".format(param))
+            return None
+
+        if param_idx not in current_value:
+            _LOGGER.warning(
+                "Requested param limits for: '{}({})' but limits for this param do not exist".format(param, param_idx))
+            return None
+        
+        val = current_value[param_idx]
+        return val
+
+
     async def get_param_limits(self, param: str):
         if not self._cache.exists(API_CONFIG_PARAMS_DATA):
             limits = await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)
@@ -175,7 +196,6 @@ class Econet300Api:
 
         curr_limits = limits[param_idx]
         return Limits(curr_limits["minv"], curr_limits["maxv"])
-
 
     async def _fetch_reg_key(self, reg, data_key):
         data = await self._client.get_params(reg)
