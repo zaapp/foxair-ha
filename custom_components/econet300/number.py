@@ -30,7 +30,6 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        process_val=lambda x: round(x, 1)
     ),
     EconetNumberEntityDescription(
         key="239",
@@ -38,7 +37,6 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        process_val=lambda x: round(x, 1)
     ),
     EconetNumberEntityDescription(
         key="261",
@@ -46,7 +44,6 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
-        process_val=lambda x: round(x)
     )
 )
 
