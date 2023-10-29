@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from homeassistant.components.number import NumberEntity, NumberDeviceClass, NumberEntityDescription, NumberMode
+from homeassistant.components.number import NumberEntity, NumberDeviceClass, NumberEntityDescription
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import TEMP_CELSIUS
 from homeassistant.core import HomeAssistant
@@ -48,6 +48,14 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         native_unit_of_measurement=TEMP_CELSIUS,
         native_step=1
     )
+        EconetNumberEntityDescription(
+        key="183",
+        name="Temperatura zadana bufora",
+        icon="mdi:thermometer",
+        device_class=NumberDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=TEMP_CELSIUS,
+        native_step=1
+    )
 )
 
 
@@ -64,10 +72,6 @@ class EconetNumber(EconetEntity, NumberEntity):
     def _sync_state(self, value):
         """Sync state"""
         self._attr_native_value = value
-        self.async_write_ha_state()
-
-    async def async_update(self) -> None:
-        self._attr_native_value = self._api.get_param_value(self.entity_description.key)
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: str) -> None:
@@ -97,10 +101,9 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
     return coordinator.has_data(desc.key) and coordinator.data[desc.key]
 
 
-def apply_limits(desc: EconetNumberEntityDescription, limits: Limits, currVal):
+def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
     desc.native_min_value = limits.min
     desc.native_max_value = limits.max
-    desc.native_value = currVal
 
 async def async_setup_entry(
         hass: HomeAssistant,
@@ -116,19 +119,14 @@ async def async_setup_entry(
 
     for description in NUMBER_TYPES:
         number_limits = await api.get_param_limits(description.key)
-        number_curr_value = await api.get_param_value(description.key)
 
         if number_limits is None:
             _LOGGER.warning("Cannot add entity: {}, numeric limits for this entity is None")
             continue
 
-        if number_curr_value is None:
-            _LOGGER.warning("Cannot add enrity: {}, numeric value because entry is None")
-            continue
-
         if can_add(description, coordinator):
 
-            apply_limits(description, number_limits, number_curr_value)
+            apply_limits(description, number_limits)
             entities.append(EconetNumber(
                 description,
                 coordinator,
