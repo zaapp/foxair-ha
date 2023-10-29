@@ -27,8 +27,8 @@ API_CONFIG_PARAMS_URI = "editParams"
 API_CONFIG_PARAMS_DATA = "data"
 
 EDITABLE_PARAMS_MAPPING_TABLE = {
+    "183": "183",
     "238": "238",
     "239": "239",
-    "261": "261",
-    "183": "183"
+    "261": "261"
 }
