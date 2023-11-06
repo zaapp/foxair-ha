@@ -27,12 +27,19 @@ class EconetBinarySensorEntityDescription(BinarySensorEntityDescription):
 
 BINARY_SENSOR_TYPES: tuple[EconetBinarySensorEntityDescription, ...] = (
     EconetBinarySensorEntityDescription(
-        availability_key="PHNXreg2011",
-        key="PHNXreg2011",
+        availability_key="HPStatusControl",
+        key="HPStatusControl",
         name="Pompa ciepła",
         icon="mdi:pump",
         device_class=BinarySensorDeviceClass.RUNNING
     ),
+    EconetBinarySensorEntityDescription(
+        availability_key="HPStatusCircPStat0",
+        key="HPStatusCircPStat0",
+        name="Pompa obieg 1",
+        icon="mdi:pump",
+        device_class=BinarySensorDeviceClass.RUNNING
+    )    
 )
 
 

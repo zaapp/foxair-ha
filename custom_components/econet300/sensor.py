@@ -54,7 +54,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         process_val=lambda x: round(x, 2)
     ),
     EconetSensorEntityDescription(
-        key="PHNXoutletTemp",
+        key="PHNXreg2045",
         name="Heat pump outlet temp",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
@@ -63,7 +63,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         process_val=lambda x: round(x, 2)
     ),
     EconetSensorEntityDescription(
-        key="PHNXinletTemp",
+        key="PHNXreg2046",
         name="Heat pump inlet temp",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
@@ -78,6 +78,29 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
+    ),
+    EconetSensorEntityDescription(
+        key="TempCWU",
+        name="Temp CWU",
+        native_unit_of_measurement=TEMP_CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        process_val=lambda x: round(x, 2)
+    ),
+    EconetSensorEntityDescription(
+        key="ElectricPower",
+        name="Power usage",
+        native_unit_of_measurement="kW",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.POWER,
+        process_val=lambda x: round(x, 2)
+    ),
+    EconetSensorEntityDescription(
+        key="HPStatusWorkMode",
+        name="Zawór trójdrogowy",
+        device_class=SensorDeviceClass.ENUM,
+        options=[0,1,2],
+        process_val=lambda x: round(x, 2),
     )
 )
 
