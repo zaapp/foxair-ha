@@ -176,7 +176,6 @@ class Econet300Api:
         val = current_value[param_idx]
         return val["value"]
 
-
     async def get_param_limits(self, param: str):
         if not self._cache.exists(API_CONFIG_PARAMS_DATA):
             limits = await self._fetch_reg_key(API_CONFIG_PARAMS_URI, API_CONFIG_PARAMS_DATA)

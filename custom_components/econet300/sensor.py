@@ -28,7 +28,7 @@ class EconetSensorEntityDescription(SensorEntityDescription):
 SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     EconetSensorEntityDescription(
         key="TempBuforUp",
-        name="Buffer temp UP",
+        name="Temperatura bufora GÓRA",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -37,7 +37,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     ),
     EconetSensorEntityDescription(
         key="TempBuforDown",
-        name="Buffer temp DOWN",
+        name="Temperatura burora DÓŁ",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -46,7 +46,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     ),
     EconetSensorEntityDescription(
         key="TempWthr",
-        name="Outside temperature",
+        name="Temperatura zewnętrzna",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -55,25 +55,25 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     ),
     EconetSensorEntityDescription(
         key="PHNXreg2045",
-        name="Heat pump outlet temp",
+        name="Temperatura zasilania pompy ciepła",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
-        process_val=lambda x: round(x, 2)
+        process_val=lambda x: round(x/10, 2)
     ),
     EconetSensorEntityDescription(
         key="PHNXreg2046",
-        name="Heat pump inlet temp",
+        name="Temperatura powrotu pompy ciepła",
         icon="mdi:thermometer",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
-        process_val=lambda x: round(x, 2)
+        process_val=lambda x: round(x/10, 2)
     ),
     EconetSensorEntityDescription(
         key="Circuit1thermostat",
-        name="Temp on thermostat 1",
+        name="Temperatura termostat 1",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -81,7 +81,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     ),
     EconetSensorEntityDescription(
         key="TempCWU",
-        name="Temp CWU",
+        name="Temperatura CWU",
         native_unit_of_measurement=TEMP_CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -89,7 +89,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     ),
     EconetSensorEntityDescription(
         key="ElectricPower",
-        name="Power usage",
+        name="Zużycie energii",
         native_unit_of_measurement="kW",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
@@ -101,7 +101,31 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         device_class=SensorDeviceClass.ENUM,
         options=[0,1,2],
         process_val=lambda x: round(x, 2),
-    )
+    ),
+    EconetSensorEntityDescription(
+        key="PHNXreg2071",
+        name="Częstotliwość sprężarki",
+        native_unit_of_measurement="Hz",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.FREQUENCY,
+        process_val=lambda x: round(x, 2)
+    ),
+    EconetSensorEntityDescription(
+        key="PHNXreg2074",
+        name="Obroty wentylatora",
+        native_unit_of_measurement="obr/min",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.FREQUENCY,
+        process_val=lambda x: round(x, 2)
+    ),
+    EconetSensorEntityDescription(
+        key="BuforCalcSetTemp",
+        name="Temperatura zadana bufora",
+        native_unit_of_measurement=TEMP_CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.TEMPERATURE,
+        process_val=lambda x: round(x, 2)
+    ),
 )
 
 

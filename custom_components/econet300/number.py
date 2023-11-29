@@ -25,7 +25,7 @@ class EconetNumberEntityDescription(NumberEntityDescription):
 NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
     EconetNumberEntityDescription(
         key="238",
-        name="Obieg 1 temp dzień",
+        name="Obieg 1 temperatura - DZIEŃ",
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
@@ -33,28 +33,20 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
     ),
     EconetNumberEntityDescription(
         key="239",
-        name="Obieg 1 temp noc",
+        name="Obieg 1 temperatura - NOC",
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
         native_step=1
     ),
     EconetNumberEntityDescription(
-        key="261",
-        name="Obieg 1 temp wody obiegowej",
+        key="103",
+        name="CWU temperatura",
         icon="mdi:thermometer",
         device_class=NumberDeviceClass.TEMPERATURE,
         native_unit_of_measurement=TEMP_CELSIUS,
         native_step=1
     ),
-    EconetNumberEntityDescription(
-        key="183",
-        name="Temperatura zadana bufora",
-        icon="mdi:thermometer",
-        device_class=NumberDeviceClass.TEMPERATURE,
-        native_unit_of_measurement=TEMP_CELSIUS,
-        native_step=1
-    )
 )
 
 class EconetNumber(EconetEntity, NumberEntity):
@@ -69,15 +61,15 @@ class EconetNumber(EconetEntity, NumberEntity):
 
     def _sync_state(self, value):
         """Sync state"""
-        self._attr_native_value = value
+        self._attr_native_value = value['value']
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: str) -> None:
         """Update the current value."""
         _LOGGER.debug("Set value: {}".format(value))
 
-        if value == self._attr_native_value:
-            return
+        #if value == self._attr_native_value:
+        #    return
 
         #if value > self._attr_native_max_value:
         #    _LOGGER.warning(
@@ -92,7 +84,7 @@ class EconetNumber(EconetEntity, NumberEntity):
             _LOGGER.warning("Setting value failed")
             return
 
-        self._attr_native_value = value
+        self._attr_native_value = value['value']
         self.async_write_ha_state()
 
 def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordinator):
@@ -102,6 +94,9 @@ def can_add(desc: EconetNumberEntityDescription, coordinator: EconetDataCoordina
 def apply_limits(desc: EconetNumberEntityDescription, limits: Limits):
     desc.native_min_value = limits.min
     desc.native_max_value = limits.max
+    
+def apply_value(desc:EconetNumberEntityDescription, value):
+    desc.native_value = value
 
 async def async_setup_entry(
         hass: HomeAssistant,
@@ -116,7 +111,8 @@ async def async_setup_entry(
     entities: list[EconetNumber] = []
 
     for description in NUMBER_TYPES:
-        number_limits = await api.get_param_limits(description.key)
+        number_limits = await api.get_param_limits(description.key) 
+        number_value = await api.get_param_value(description.key)
 
         if number_limits is None:
             _LOGGER.warning("Cannot add entity: {}, numeric limits for this entity is None")
@@ -125,6 +121,7 @@ async def async_setup_entry(
         if can_add(description, coordinator):
 
             apply_limits(description, number_limits)
+            apply_value(description, number_value)
             entities.append(EconetNumber(
                 description,
                 coordinator,
