@@ -88,7 +88,7 @@ class EconetNumber(EconetEntity, NumberEntity):
         #    _LOGGER.warning("Requested value: '{}' is below allowed value: '{}'".format(value, self._attr_min_value))
         #    return
 
-        if not await self._api.set_param(self.entity_description.key, float(value)):
+        if not await self._api.set_param(self.entity_description.key, int(value)):
             _LOGGER.warning("Setting value failed")
             return
 
