@@ -47,6 +47,14 @@ NUMBER_TYPES: tuple[EconetNumberEntityDescription, ...] = (
         native_unit_of_measurement=TEMP_CELSIUS,
         native_step=1
     ),
+    EconetNumberEntityDescription(
+        key="183",
+        name="Temperatura zadana bufora",
+        icon="mdi:thermometer",
+        device_class=NumberDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=TEMP_CELSIUS,
+        native_step=1
+    ),
 )
 
 class EconetNumber(EconetEntity, NumberEntity):
@@ -80,7 +88,7 @@ class EconetNumber(EconetEntity, NumberEntity):
         #    _LOGGER.warning("Requested value: '{}' is below allowed value: '{}'".format(value, self._attr_min_value))
         #    return
 
-        if not await self._api.set_param(self.entity_description.key, int(value)):
+        if not await self._api.set_param(self.entity_description.key, value):
             _LOGGER.warning("Setting value failed")
             return
 
