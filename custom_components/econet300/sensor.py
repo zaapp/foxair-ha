@@ -103,6 +103,13 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         process_val=lambda x: round(x, 2),
     ),
     EconetSensorEntityDescription(
+        key="HPStatusFlowHeatStat",
+        name="Grzałka przepływowa stage",
+        device_class=SensorDeviceClass.ENUM,
+        options=[0,1,2,3],
+        process_val=lambda x: round(x, 2),
+    ),
+    EconetSensorEntityDescription(
         key="PHNXreg2071",
         name="Częstotliwość sprężarki",
         native_unit_of_measurement="Hz",
