@@ -1,16 +1,25 @@
 from dataclasses import dataclass
 from typing import Callable, Any
 
-from homeassistant.components.binary_sensor import BinarySensorEntityDescription, BinarySensorDeviceClass, \
-    BinarySensorEntity
+from homeassistant.components.binary_sensor import (
+    BinarySensorEntityDescription,
+    BinarySensorDeviceClass,
+    BinarySensorEntity,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .common import EconetDataCoordinator, Econet300Api
 
-from .const import DOMAIN, SERVICE_COORDINATOR, SERVICE_API, DEVICE_INFO_CONTROLLER_NAME, DEVICE_INFO_MODEL, \
-    DEVICE_INFO_MANUFACTURER
+from .const import (
+    DOMAIN,
+    SERVICE_COORDINATOR,
+    SERVICE_API,
+    DEVICE_INFO_CONTROLLER_NAME,
+    DEVICE_INFO_MODEL,
+    DEVICE_INFO_MANUFACTURER,
+)
 
 import logging
 
@@ -22,6 +31,7 @@ _LOGGER = logging.getLogger(__name__)
 @dataclass
 class EconetBinarySensorEntityDescription(BinarySensorEntityDescription):
     """Describes Econet binary sensor entity."""
+
     availability_key: str = ""
 
 
@@ -31,22 +41,22 @@ BINARY_SENSOR_TYPES: tuple[EconetBinarySensorEntityDescription, ...] = (
         key="HPStatusControl",
         name="Praca pompy ciepła",
         icon="mdi:pump",
-        device_class=BinarySensorDeviceClass.RUNNING
+        device_class=BinarySensorDeviceClass.RUNNING,
     ),
     EconetBinarySensorEntityDescription(
         availability_key="HPStatusUhsStat",
         key="HPStatusUhsStat",
         name="Praca pompy obiegowej",
         icon="mdi:pump",
-        device_class=BinarySensorDeviceClass.RUNNING
+        device_class=BinarySensorDeviceClass.RUNNING,
     ),
     EconetBinarySensorEntityDescription(
         availability_key="HPStatusCircPStat0",
         key="HPStatusCircPStat0",
         name="Praca pompy obiegu 1",
         icon="mdi:pump",
-        device_class=BinarySensorDeviceClass.RUNNING
-    )    
+        device_class=BinarySensorDeviceClass.RUNNING,
+    ),
 )
 
 
@@ -63,13 +73,22 @@ class EconetBinarySensor(BinarySensorEntity):
 class ControllerBinarySensor(EconetEntity, EconetBinarySensor):
     """Describes Econet binary sensor entity."""
 
-    def __init__(self, description: EconetBinarySensorEntityDescription, coordinator: EconetDataCoordinator,
-                 api: Econet300Api):
+    def __init__(
+        self,
+        description: EconetBinarySensorEntityDescription,
+        coordinator: EconetDataCoordinator,
+        api: Econet300Api,
+    ):
         super().__init__(description, coordinator, api)
 
 
-def can_add(desc: EconetBinarySensorEntityDescription, coordinator: EconetDataCoordinator):
-    return coordinator.has_data(desc.availability_key) and coordinator.data[desc.availability_key] is not False
+def can_add(
+    desc: EconetBinarySensorEntityDescription, coordinator: EconetDataCoordinator
+):
+    return (
+        coordinator.has_data(desc.availability_key)
+        and coordinator.data[desc.availability_key] is not False
+    )
 
 
 def create_binary_sensors(coordinator: EconetDataCoordinator, api: Econet300Api):
@@ -78,15 +97,20 @@ def create_binary_sensors(coordinator: EconetDataCoordinator, api: Econet300Api)
         if can_add(description, coordinator):
             entities.append(ControllerBinarySensor(description, coordinator, api))
         else:
-            _LOGGER.debug("Availability key: " + description.key + " does not exist, entity will not be "
-                                                                   "added")
+            _LOGGER.debug(
+                "Availability key: "
+                + description.key
+                + " does not exist, entity will not be "
+                "added"
+            )
 
     return entities
 
+
 async def async_setup_entry(
-        hass: HomeAssistant,
-        entry: ConfigEntry,
-        async_add_entities: AddEntitiesCallback,
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ) -> bool:
     """Set up the sensor platform."""
 

@@ -1,4 +1,5 @@
 """The Example Integration integration."""
+
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
@@ -11,7 +12,12 @@ from .common import AuthError, EconetDataCoordinator
 from .mem_cache import MemCache
 from .const import DOMAIN, SERVICE_API, SERVICE_COORDINATOR
 
-PLATFORMS: list[Platform] = [Platform.SENSOR, Platform.BINARY_SENSOR, Platform.NUMBER]
+PLATFORMS: list[Platform] = [
+    Platform.SENSOR,
+    Platform.BINARY_SENSOR,
+    Platform.NUMBER,
+    Platform.SELECT,
+]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -29,7 +35,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         hass.data[DOMAIN][entry.entry_id] = {
             SERVICE_API: api,
-            SERVICE_COORDINATOR: coordinator
+            SERVICE_COORDINATOR: coordinator,
         }
 
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)

@@ -5,7 +5,7 @@ from typing import Callable, Any
 from .common import EconetDataCoordinator, Econet300Api
 from homeassistant.components.sensor import SensorEntityDescription, SensorStateClass, SensorDeviceClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import TEMP_CELSIUS, PERCENTAGE
+from homeassistant.const import UnitOfTemperature, PERCENTAGE
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import DOMAIN, SERVICE_COORDINATOR, SERVICE_API
@@ -30,7 +30,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         key="TempBuforUp",
         name="Temperatura bufora GÓRA",
         icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
@@ -39,7 +39,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         key="TempBuforDown",
         name="Temperatura burora DÓŁ",
         icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
@@ -48,7 +48,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         key="TempWthr",
         name="Temperatura zewnętrzna",
         icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
@@ -57,7 +57,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         key="PHNXreg2045",
         name="Temperatura zasilania pompy ciepła",
         icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x/10, 2)
@@ -66,7 +66,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
         key="PHNXreg2046",
         name="Temperatura powrotu pompy ciepła",
         icon="mdi:thermometer",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x/10, 2)
@@ -74,7 +74,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     EconetSensorEntityDescription(
         key="Circuit1thermostat",
         name="Temperatura termostat 1",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
@@ -82,7 +82,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     EconetSensorEntityDescription(
         key="TempCWU",
         name="Temperatura CWU",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
@@ -128,7 +128,7 @@ SENSOR_TYPES: tuple[EconetSensorEntityDescription, ...] = (
     EconetSensorEntityDescription(
         key="BuforCalcSetTemp",
         name="Temperatura zadana bufora",
-        native_unit_of_measurement=TEMP_CELSIUS,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         process_val=lambda x: round(x, 2)
